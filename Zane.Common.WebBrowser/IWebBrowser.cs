@@ -78,6 +78,10 @@ namespace Zane.Common.WebBrowser
         /// <param name="data"></param>
         /// <returns></returns>
         public abstract IResponsePack DownloadJson(Uri uri, Dictionary<string, string> data = null);
+        public IResponsePack DownloadJson(string url, Dictionary<string, string> data = null)
+        {
+            return DownloadJson(new Uri(url), data);
+        }
 
         public abstract void Dispose();
     }
