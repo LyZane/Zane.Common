@@ -11,7 +11,7 @@ namespace Zane.Common.WebBrowser.Test
         static void Main(string[] args)
         {
             WebBrowser browser = new WebBrowser();
-            var response = browser.DownloadString("http://z.cn");
+            var response = browser.DownloadString("http://z.cn", new { param1 = "", param2 = 2 });
         }
     }
 }

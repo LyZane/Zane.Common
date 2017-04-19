@@ -36,11 +36,11 @@ namespace Zane.Common.WebBrowser
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public override IResponsePack DownloadString(Uri uri, Dictionary<string, string> data = null)
+        public override IResponsePack DownloadString(Uri uri, IDictionary<string, object> data = null)
         {
             return _Client.DownloadString(uri, data);
         }
-        public IResponsePack DownloadString(Uri uri, Dictionary<string, string> data, Encoding requestEncoding)
+        public IResponsePack DownloadString(Uri uri, IDictionary<string, object> data, Encoding requestEncoding)
         {
             return _Client.DownloadString(uri, data, requestEncoding);
         }
@@ -49,7 +49,7 @@ namespace Zane.Common.WebBrowser
             return _Client.DownloadString(uri, dataStr, requestEncoding);
         }
 
-        public override IResponsePack DownloadJson(Uri uri, Dictionary<string, string> data = null)
+        public override IResponsePack DownloadJson(Uri uri, IDictionary<string, object> data = null)
         {
             return _Client.DownloadString(uri, data);
         }

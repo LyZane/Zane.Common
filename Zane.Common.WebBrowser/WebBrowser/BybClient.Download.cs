@@ -62,7 +62,7 @@ namespace Zane.Common.WebBrowser
         /// <param name="url"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public ResponsePack_WebBrowser DownloadString(string url, Dictionary<string, string> data = null)
+        public ResponsePack_WebBrowser DownloadString(string url, IDictionary<string, object> data = null)
         {
             return DownloadString(new Uri(url), data);
         }
@@ -116,7 +116,7 @@ namespace Zane.Common.WebBrowser
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public ResponsePack_WebBrowser DownloadString(Uri uri, Dictionary<string, string> data = null, Encoding requestEncoding = null)
+        public ResponsePack_WebBrowser DownloadString(Uri uri, IDictionary<string, object> data = null, Encoding requestEncoding = null)
         {
             if (requestEncoding == null)
             {
@@ -132,7 +132,8 @@ namespace Zane.Common.WebBrowser
             string dataStr = null;
             if (data != null && data.Count > 0)
             {
-                dataStr = data.Aggregate("", (total, next) => total + "&" + next.Key + "=" + HttpUtility.UrlEncode(next.Value, requestEncoding));
+                string[] array = data.Select(a => a.Key + "=" + HttpUtility.UrlEncode(a.Value.ToString(), requestEncoding)).ToArray();
+                dataStr = string.Join("&", array);
             }
             return DownloadString(uri, dataStr, requestEncoding);
         }
