@@ -8,25 +8,11 @@ namespace Zane.StandardCommen.WebBrowser.Test
         static void Main(string[] args)
         {
             
-            
-            using (HttpClient client = new HttpClient())
-            {
-                // Call asynchronous network methods in a try/catch block to handle exceptions
-                try
-                {
-                    HttpResponseMessage response = client.GetAsync("http://g.cn").Result;
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = response.Content.ReadAsStringAsync().Result;
-                    // Above three lines can be replaced with new helper method below
-                    // string responseBody = await client.GetStringAsync(uri);
 
-                    Console.WriteLine(responseBody);
-                }
-                catch (HttpRequestException e)
-                {
-                    Console.WriteLine("\nException Caught!");
-                    Console.WriteLine("Message :{0} ", e.Message);
-                }
+
+            using (WebBrowser browser = new WebBrowser())
+            {
+                browser.DownloadString("http://g.cn");
             }
 
 

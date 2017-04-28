@@ -72,15 +72,15 @@ namespace Zane.StandardCommen.WebBrowser
             return DownloadString(new Uri(url), data);
         }
 
-        //public IResponsePack DownloadString(string url, dynamic data)
-        //{
-        //    var a = new {a="" };
-        //    return DownloadString(new Uri(url),new RouteValueDictionary(data));
-        //}
-        //public IResponsePack DownloadString(Uri uri, dynamic data)
-        //{
-        //    return DownloadString(uri, new RouteValueDictionary(data));
-        //}
+        public IResponsePack DownloadString(string url, dynamic data)
+        {
+            var a = new { a = "" };
+            return DownloadString(new Uri(url), (IDictionary<string, object>)data);
+        }
+        public IResponsePack DownloadString(Uri uri, dynamic data)
+        {
+            return DownloadString(uri, (IDictionary<string, object>)data);
+        }
 
         /// <summary>
         /// 下载json形式的内容（由于有些浏览器默认会将json内容包装成html，所以可能需要额外处理，以提取出其中的json部分。）
@@ -93,14 +93,14 @@ namespace Zane.StandardCommen.WebBrowser
         {
             return DownloadJson(new Uri(url), data);
         }
-        //public IResponsePack DownloadJson(string url, dynamic data)
-        //{
-        //    return DownloadJson(new Uri(url), new RouteValueDictionary(data));
-        //}
-        //public IResponsePack DownloadJson(Uri uri, dynamic data)
-        //{
-        //    return DownloadJson(uri, new RouteValueDictionary(data));
-        //}
+        public IResponsePack DownloadJson(string url, dynamic data)
+        {
+            return DownloadJson(new Uri(url), (IDictionary<string, object>)data);
+        }
+        public IResponsePack DownloadJson(Uri uri, dynamic data)
+        {
+            return DownloadJson(uri, (IDictionary<string, object>)data);
+        }
 
         public abstract void Dispose();
     }

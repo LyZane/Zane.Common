@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
-
+using System.Linq;
 namespace Zane.StandardCommen.WebBrowser
 {
-    class WebBrowser : IWebBrowser
+    public class WebBrowser : IWebBrowser
     {
         HttpClient _Client = new HttpClient();
         
@@ -22,9 +23,6 @@ namespace Zane.StandardCommen.WebBrowser
 
         public override IResponsePack DownloadString(Uri uri, IDictionary<string, object> data = null)
         {
-            var obj = new { name = "test", age = 1024 };
-            var type = obj.GetType();
-            
             HttpRequestMessage request = new HttpRequestMessage();
             request.Method = new HttpMethod(this.Config.Method);
             HttpResponseMessage response = _Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
@@ -32,11 +30,13 @@ namespace Zane.StandardCommen.WebBrowser
             return null;
         }
 
+        
+
         public override string GetCookie(Uri uri, string name)
         {
             throw new NotImplementedException();
         }
-
+Class1.cs
         public override Dictionary<string, string> GetCookies(Uri uri)
         {
             throw new NotImplementedException();
