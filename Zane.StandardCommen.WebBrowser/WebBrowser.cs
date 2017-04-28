@@ -36,7 +36,7 @@ namespace Zane.StandardCommen.WebBrowser
         {
             throw new NotImplementedException();
         }
-Class1.cs
+
         public override Dictionary<string, string> GetCookies(Uri uri)
         {
             throw new NotImplementedException();
