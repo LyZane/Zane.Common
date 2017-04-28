@@ -73,10 +73,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="RequestConfig.cs" />
-    <Compile Include="WebBrowser\BybClient.cs">
+    <Compile Include="WebBrowser\ClientCore.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebBrowser\BybClient.Download.cs">
+    <Compile Include="WebBrowser\ClientCore.Download.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebBrowser\RequestState.cs" />

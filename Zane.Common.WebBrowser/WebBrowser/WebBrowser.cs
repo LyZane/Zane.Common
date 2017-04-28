@@ -14,11 +14,11 @@ namespace Zane.Common.WebBrowser
             _Client.Dispose();
         }
 
-        private BybClient _Client;
+        private ClientCore _Client;
 
         protected override void Init(RequestConfig config)
         {
-            _Client = new BybClient(config);
+            _Client = new ClientCore(config);
         }
 
         public WebBrowser() : base(new RequestConfig())

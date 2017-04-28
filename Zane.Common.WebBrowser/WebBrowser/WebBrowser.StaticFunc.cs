@@ -15,7 +15,7 @@ namespace Zane.Common.WebBrowser
 
         public static ResponsePack_WebBrowser Get(Uri uri, Dictionary<string,object> data = null)
         {
-            BybClient browser = new BybClient();
+            ClientCore browser = new ClientCore();
             return browser.DownloadString(uri, data);
         }
 
@@ -26,7 +26,7 @@ namespace Zane.Common.WebBrowser
 
         public static ResponsePack_WebBrowser Post(Uri uri, Dictionary<string, object> data = null, Encoding requestEncoding = null)
         {
-            BybClient browser = new BybClient();
+            ClientCore browser = new ClientCore();
             browser.Config.Method = "POST";
             return browser.DownloadString(uri, data, requestEncoding);
         }

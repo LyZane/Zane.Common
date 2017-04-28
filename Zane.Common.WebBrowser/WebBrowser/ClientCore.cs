@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Zane.Common.WebBrowser
 {
-    internal partial class BybClient : WebClient
+    internal partial class ClientCore : WebClient
     {
         private static readonly CookieContainer _PublicCookies = new CookieContainer();
 
@@ -23,12 +23,12 @@ namespace Zane.Common.WebBrowser
         public ResponsePack_WebBrowser LastResponsePack;
         public RequestConfig Config = new RequestConfig();
 
-        public BybClient()
+        public ClientCore()
         {
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
         }
 
-        public BybClient(RequestConfig config)
+        public ClientCore(RequestConfig config)
         {
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             Config = config;

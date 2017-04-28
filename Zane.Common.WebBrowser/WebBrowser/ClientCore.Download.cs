@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Zane.Common.WebBrowser
 {
-    internal partial class BybClient : WebClient
+    internal partial class ClientCore : WebClient
     {
         /// <summary>
         /// 异步下载文本，目前仅支持GET。
