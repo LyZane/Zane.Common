@@ -20,11 +20,19 @@ namespace Zane.StandardCommen.WebBrowser
         {
             throw new NotImplementedException();
         }
-
+        private HttpRequestMessage BuildRequest(Uri uri, IDictionary<string, object> data = null)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod(Config.Method), uri);
+            request.Content = new FormUrlEncodedContent(data.ToDictionary(a=>a.Key,a=>a.Value.ToString()));
+            if (!string.IsNullOrEmpty(Config.ContentType))
+            {
+                request.Content.Headers.ContentType.MediaType = Config.ContentType;
+            }
+            return request;
+        }
         public override IResponsePack DownloadString(Uri uri, IDictionary<string, object> data = null)
         {
-            HttpRequestMessage request = new HttpRequestMessage();
-            request.Method = new HttpMethod(this.Config.Method);
+            HttpRequestMessage request = BuildRequest(uri,data);
             HttpResponseMessage response = _Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
 
             return null;
