@@ -13,32 +13,6 @@ using System.Threading.Tasks;
 
 namespace Zane.Common.Extensions.Base
 {
-    internal class CustomResolver : DefaultContractResolver
-    {
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
-        {
-            JsonProperty property = base.CreateProperty(member, memberSerialization);
-
-            property.ShouldSerialize = instance =>
-            {
-                try
-                {
-                    PropertyInfo prop = (PropertyInfo)member;
-                    if (prop.CanRead)
-                    {
-                        prop.GetValue(instance, null);
-                        return true;
-                    }
-                }
-                catch
-                {
-                }
-                return false;
-            };
-
-            return property;
-        }
-    }
     internal class MemoryStreamJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
@@ -71,10 +45,14 @@ namespace Zane.Common.Extensions.Base
             JsonSerializer serializer = new JsonSerializer()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                ContractResolver = new CustomResolver()
+                MissingMemberHandling = MissingMemberHandling.Ignore
             };
             serializer.Converters.Add(new MemoryStreamJsonConverter());
+            //捕获序列化时产生的异常，并不对异常做处理。
+            serializer.Error += delegate (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args)
+            {
+                args.ErrorContext.Handled = true;
+            };
             StringWriter sw = new StringWriter(sb);
             serializer.Serialize(sw, obj);
             return sb.ToString();
