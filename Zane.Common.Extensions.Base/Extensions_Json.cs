@@ -1,16 +1,63 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Zane.Common.Extensions.Base
 {
+    internal class CustomResolver : DefaultContractResolver
+    {
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        {
+            JsonProperty property = base.CreateProperty(member, memberSerialization);
+
+            property.ShouldSerialize = instance =>
+            {
+                try
+                {
+                    PropertyInfo prop = (PropertyInfo)member;
+                    if (prop.CanRead)
+                    {
+                        prop.GetValue(instance, null);
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+                return false;
+            };
+
+            return property;
+        }
+    }
+    internal class MemoryStreamJsonConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof(MemoryStream).IsAssignableFrom(objectType);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var bytes = serializer.Deserialize<byte[]>(reader);
+            return bytes != null ? new MemoryStream(bytes) : new MemoryStream();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var bytes = ((MemoryStream)value).ToArray();
+            serializer.Serialize(writer, bytes);
+        }
+    }
     public static class Extensions_Json
     {
         /// <summary>
@@ -21,7 +68,13 @@ namespace Zane.Common.Extensions.Base
         public static string ToJsonString(this object obj)
         {
             StringBuilder sb = new StringBuilder();
-            JsonSerializer serializer = new JsonSerializer() { ReferenceLoopHandling = ReferenceLoopHandling.Serialize };// { ContractResolver = new DefaultContractResolver() { IgnoreSerializableInterface = true  } };
+            JsonSerializer serializer = new JsonSerializer()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                ContractResolver = new CustomResolver()
+            };
+            serializer.Converters.Add(new MemoryStreamJsonConverter());
             StringWriter sw = new StringWriter(sb);
             serializer.Serialize(sw, obj);
             return sb.ToString();
