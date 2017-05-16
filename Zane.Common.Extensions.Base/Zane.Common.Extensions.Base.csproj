@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions_DateTime.cs" />
+    <Compile Include="Extensions_Extract.cs" />
     <Compile Include="Extensions_Json.cs" />
     <Compile Include="Extensions_Number.cs" />
     <Compile Include="Extensions_String.cs" />
+    <Compile Include="Extensions_TypeConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
