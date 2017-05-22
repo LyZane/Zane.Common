@@ -12,7 +12,8 @@ namespace Zane.StandardCommen.WebBrowser.Test
 
             using (WebBrowser browser = new WebBrowser())
             {
-                browser.DownloadString("http://g.cn");
+                //https://www.facebook.com/
+                browser.DownloadString("https://www.facebook.com");
             }
 
 
