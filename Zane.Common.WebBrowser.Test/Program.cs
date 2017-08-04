@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,8 @@ namespace Zane.Common.WebBrowser.Test
     {
         static void Main(string[] args)
         {
+
+            var a1 = WebBrowser.Post("https://u.dttx.com/login/login.json", new { username = "", password = "", code = "", _ajax = 1 });
             //WebBrowser browser = new WebBrowser();
             ////var response = browser.DownloadString("https://trends.google.com.hk/trends/hotvideos");
             ////var response = browser.DownloadString("https://www.facebook.com/");
